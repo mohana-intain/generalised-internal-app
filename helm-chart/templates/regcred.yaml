@@ -1,0 +1,12 @@
+# Please edit the object below. Lines beginning with a '#' will be ignored,
+# and an empty file will abort the edit. If an error occurs while saving this file will be
+# reopened with the relevant failures.
+#
+apiVersion: v1
+data:
+  .dockerconfigjson: eyJhdXRocyI6eyJodHRwczovL2luZGV4LmRvY2tlci5pby92MS8iOnsidXNlcm5hbWUiOiJpbnRhaW5yZWdpc3RyeSIsInBhc3N3b3JkIjoiN2RkZjlkYmMtZWU3My00M2NjLWI3N2ItMmQzMDgwOWIzZDRhIiwiZW1haWwiOiJzaXZhcmFtLmthbm5hbkBpbnRhaW5mdC5jb20iLCJhdXRoIjoiYVc1MFlXbHVjbVZuYVhOMGNuazZOMlJrWmpsa1ltTXRaV1UzTXkwME0yTmpMV0kzTjJJdE1tUXpNRGd3T1dJelpEUmgifX19
+kind: Secret
+metadata:
+  name: regcred
+#  namespace: sample
+type: kubernetes.io/dockerconfigjson
