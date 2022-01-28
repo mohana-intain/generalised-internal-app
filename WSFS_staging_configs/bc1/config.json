@@ -1,0 +1,35 @@
+{
+  "host": "localhost",
+  "port": "4000",
+  "jwt_expiretime": "36000",
+  "channelName": "saludabc1channel",
+  "CC_SRC_PATH": "../artifacts",
+  "eventWaitTime": "60000",
+  "network_connection_profile_path": "",
+  "wsfstrustee_connection_profile_path": "",
+  "saludabc1inv_connection_profile_path": "",
+  "saludabc1serv_connection_profile_path": "",
+  "wl1inv_connection_profile_path": "",
+  "admins": [
+    {
+      "userOrg": "wsfstrustee",
+      "username": "wsfstrustee-admin",
+      "secret": "wsfstrustee-adminpw"
+    },
+    {
+      "userOrg": "saludabc1inv",
+      "username": "saludabc1inv-admin",
+      "secret": "saludabc1inv-adminpw"
+    },
+    {
+      "userOrg": "saludabc1serv",
+      "username": "saludabc1serv-admin",
+      "secret": "saludabc1serv-adminpw"
+    },
+    {
+      "userOrg": "wl1inv",
+      "username": "wl1inv-admin",
+      "secret": "wl1inv-adminpw"
+    }
+  ]
+}

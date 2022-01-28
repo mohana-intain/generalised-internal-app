@@ -1,0 +1,25 @@
+{
+  "host": "localhost",
+  "port": "4000",
+  "jwt_expiretime": "36000",
+  "channelName": "saludafig2channel",
+  "CC_SRC_PATH": "../artifacts",
+  "eventWaitTime": "60000",
+  "network_connection_profile_path": "",
+  "wsfstrustee_connection_profile_path": "",
+  "saludafig2inv_connection_profile_path": "",
+  "saludafig2serv_connection_profile_path": "",
+  "admins": [
+    { "userOrg": "wsfstrustee", "username": "wsfstrustee-admin", "secret": "wsfstrustee-adminpw" },
+    {
+      "userOrg": "saludafig2inv",
+      "username": "saludafig2inv-admin",
+      "secret": "saludafig2inv-adminpw"
+    },
+    {
+      "userOrg": "saludafig2serv",
+      "username": "saludafig2serv-admin",
+      "secret": "saludafig2serv-adminpw"
+    }
+  ]
+}

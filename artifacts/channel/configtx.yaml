@@ -1,0 +1,130 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+
+Organizations:
+
+    - &Orginvestor
+        Name: investor
+        ID: investorMSP
+        MSPDir: ./crypto-config/investor/msp
+        AnchorPeers:
+            - Host: peer1.investor.intainabs.emulya.com
+              Port: 443
+
+    - &Orgwsfstrustee
+        Name: wsfstrustee
+        ID: wsfstrusteeMSP
+        MSPDir: ./crypto-config/wsfstrustee/msp
+        AnchorPeers:
+            - Host: peer1.wsfstrustee.intainabs.emulya.com
+              Port: 443
+
+    - &Orgwhlender
+        Name: whlender
+        ID: whlenderMSP
+        MSPDir: ./crypto-config/whlender/msp
+        AnchorPeers:
+            - Host: peer1.whlender.intainabs.emulya.com
+              Port: 443
+
+    - &Orgservicer
+        Name: servicer
+        ID: servicerMSP
+        MSPDir: ./crypto-config/servicer/msp
+        AnchorPeers:
+            - Host: peer1.servicer.intainabs.emulya.com
+              Port: 443
+
+    - &Orgissuer
+        Name: issuer
+        ID: issuerMSP
+        MSPDir: ./crypto-config/issuer/msp
+        AnchorPeers:
+            - Host: peer1.issuer.intainabs.emulya.com
+              Port: 443
+
+    - &Orgoriginator
+        Name: originator
+        ID: originatorMSP
+        MSPDir: ./crypto-config/originator/msp
+        AnchorPeers:
+            - Host: peer1.originator.intainabs.emulya.com
+              Port: 443
+
+Orderer: &OrdererDefaults
+
+    OrdererType: etcdraft
+
+    Addresses:
+        - orderer1.originator.intainabs.emulya.com:443
+        - orderer2.wsfstrustee.intainabs.emulya.com:443
+        - orderer2.issuer.intainabs.emulya.com:443
+        - orderer1.wsfstrustee.intainabs.emulya.com:443
+        - orderer1.issuer.intainabs.emulya.com:443
+    BatchTimeout: 2s
+    BatchSize:
+        MaxMessageCount: 10
+        AbsoluteMaxBytes: 99 MB
+        PreferredMaxBytes: 512 KB
+    Kafka:
+        Brokers:
+            - kafka-hlf.blockchain-kz.svc.cluster.local:9092
+    EtcdRaft:
+        Consenters:
+        - Host: orderer1.originator.intainabs.emulya.com
+          Port: 443
+          ClientTLSCert: crypto-config/originator/orderer-1originator/tls/server.crt
+          ServerTLSCert: crypto-config/originator/orderer-1originator/tls/server.crt
+        - Host: orderer2.wsfstrustee.intainabs.emulya.com
+          Port: 443
+          ClientTLSCert: crypto-config/wsfstrustee/orderer-2wsfstrustee/tls/server.crt
+          ServerTLSCert: crypto-config/wsfstrustee/orderer-2wsfstrustee/tls/server.crt
+        - Host: orderer2.issuer.intainabs.emulya.com
+          Port: 443
+          ClientTLSCert: crypto-config/issuer/orderer-2issuer/tls/server.crt
+          ServerTLSCert: crypto-config/issuer/orderer-2issuer/tls/server.crt
+        - Host: orderer1.wsfstrustee.intainabs.emulya.com
+          Port: 443
+          ClientTLSCert: crypto-config/wsfstrustee/orderer-1wsfstrustee/tls/server.crt
+          ServerTLSCert: crypto-config/wsfstrustee/orderer-1wsfstrustee/tls/server.crt
+        - Host: orderer1.issuer.intainabs.emulya.com
+          Port: 443
+          ClientTLSCert: crypto-config/issuer/orderer-1issuer/tls/server.crt
+          ServerTLSCert: crypto-config/issuer/orderer-1issuer/tls/server.crt
+
+    Organizations:
+
+Application: &ApplicationDefaults
+    Organizations:
+
+Profiles:
+
+    BaseGenesis:
+        Orderer:
+            <<: *OrdererDefaults
+            Organizations:
+                - *Orgoriginator
+                - *Orgwsfstrustee
+                - *Orgissuer
+        Consortiums:
+            MyConsortium:
+                Organizations:
+                    - *Orginvestor
+                    - *Orgwsfstrustee
+                    - *Orgwhlender
+                    - *Orgservicer
+                    - *Orgissuer
+                    - *Orgoriginator
+
+    BaseChannel:
+        Consortium: MyConsortium
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *Orgoriginator
+                - *Orgissuer
+                - *Orgservicer
+                - *Orgwhlender
+                - *Orgwsfstrustee
+                - *Orginvestor

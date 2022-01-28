@@ -1,0 +1,29 @@
+{
+  "host": "localhost",
+  "port": "4000",
+  "jwt_expiretime": "36000",
+  "channelName": "saludaseqchannel",
+  "CC_SRC_PATH": "../artifacts",
+  "eventWaitTime": "60000",
+  "network_connection_profile_path": "",
+  "wsfstrustee_connection_profile_path": "",
+  "saludaseqinv_connection_profile_path": "",
+  "saludaseqserv_connection_profile_path": "",
+  "admins": [
+    {
+      "userOrg": "wsfstrustee",
+      "username": "wsfstrustee-admin",
+      "secret": "wsfstrustee-adminpw"
+    },
+    {
+      "userOrg": "saludaseqinv",
+      "username": "saludaseqinv-admin",
+      "secret": "saludaseqinv-adminpw"
+    },
+    {
+      "userOrg": "saludaseqserv",
+      "username": "saludaseqserv-admin",
+      "secret": "saludaseqserv-adminpw"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "host": "localhost",
+  "port": "4000",
+  "jwt_expiretime": "36000",
+  "channelName": "alphaflowchannel",
+  "CC_SRC_PATH": "../artifacts",
+  "eventWaitTime": "60000",
+  "network_connection_profile_path": "",
+  "wsfstrustee_connection_profile_path": "",
+  "alphaflowinv_connection_profile_path": "",
+  "alphaflowserv_connection_profile_path": "",
+  "admins": [
+    {
+      "userOrg": "wsfstrustee",
+      "username": "wsfstrustee-admin",
+      "secret": "wsfstrustee-adminpw"
+    },
+    {
+      "userOrg": "alphaflowinv",
+      "username": "alphaflowinv-admin",
+      "secret": "alphaflowinv-adminpw"
+    },
+    {
+      "userOrg": "alphaflowserv",
+      "username": "alphaflowserv-admin",
+      "secret": "alphaflowserv-adminpw"
+    }
+  ]
+}

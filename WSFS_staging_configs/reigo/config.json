@@ -1,0 +1,29 @@
+{
+  "host": "localhost",
+  "port": "4000",
+  "jwt_expiretime": "36000",
+  "channelName": "reigochannel",
+  "CC_SRC_PATH": "../artifacts",
+  "eventWaitTime": "60000",
+  "network_connection_profile_path": "",
+  "wsfstrustee_connection_profile_path": "",
+  "reigoinv_connection_profile_path": "",
+  "reigoserv_connection_profile_path": "",
+  "admins": [
+    {
+      "userOrg": "wsfstrustee",
+      "username": "wsfstrustee-admin",
+      "secret": "wsfstrustee-adminpw"
+    },
+    {
+      "userOrg": "reigoinv",
+      "username": "reigoinv-admin",
+      "secret": "reigoinv-adminpw"
+    },
+    {
+      "userOrg": "reigoserv",
+      "username": "reigoserv-admin",
+      "secret": "reigoserv-adminpw"
+    }
+  ]
+}

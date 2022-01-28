@@ -1,0 +1,246 @@
+---
+#
+# The network connection profile provides client applications the information about the target
+# blockchain network that are necessary for the applications to interact with it. These are all
+# knowledge that must be acquired from out-of-band sources. This file provides such a source.
+#
+name: "WSFS"
+
+#
+# Any properties with an "x-" prefix will be treated as application-specific, exactly like how naming
+# in HTTP headers or swagger properties work. The SDK will simply ignore these fields and leave
+# them for the applications to process. This is a mechanism for different components of an application
+# to exchange information that are not part of the standard schema described below. In particular,
+# the "x-type" property with the "hlfv1" value example below is used by Hyperledger Composer to
+# determine the type of Fabric networks (v0.6 vs. v1.0) it needs to work with.
+#
+x-type: "hlfv1"
+
+#
+# Describe what the target network is/does.
+#
+description: "WSFS"
+
+#
+# Schema version of the content. Used by the SDK to apply the corresponding parsing rules.
+#
+version: "1.0"
+
+#
+# The client section will be added on a per org basis see org1.yaml and org2.yaml
+#
+#client:
+
+#
+# [Optional]. But most apps would have this section so that channel objects can be constructed
+# based on the content below. If an app is creating channels, then it likely will not need this
+# section.
+#
+channels:
+  # name of the channel
+  saludapacchannel:
+    # Required. list of orderers designated by the application to use for transactions on this
+    # channel. This list can be a result of access control ("org1" can only access "ordererA"), or
+    # operational decisions to share loads from applications among the orderers.  The values must
+    # be "names" of orgs defined under "organizations/peers"
+    orderers:
+      - orderer1.intain-net
+      - orderer2.intain-net
+      - orderer3.intain-net
+      - orderer4.intain-net
+      - orderer5.intain-net
+
+    # Required. list of peers from participating orgs
+    peers:
+      peer0.wsfstrustee-net:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: false
+
+      peer0.saludapacinv-net:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: false
+
+      peer0.saludapacserv-net:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: false
+
+    # [Optional]. what chaincodes are expected to exist on this channel? The application can use
+    # this information to validate that the target peers are in the expected state by comparing
+    # this list with the query results of getInstalledChaincodes() and getInstantiatedChaincodes()
+    chaincodes:
+      # the format follows the "cannonical name" of chaincodes by fabric code
+      #- mycc:v0
+
+#
+# list of participating organizations in this network
+#
+organizations:
+  wsfstrustee:
+    mspid: wsfstrusteeMSP
+    peers:
+      - peer0.wsfstrustee-net
+    certificateAuthorities:
+      - ca.wsfstrustee-net
+    adminPrivateKey:
+      path: /mnt/fabric/crypto-config/peerOrganizations/wsfstrustee-net/peers/peer0.wsfstrustee-net/msp/keystore/eb30b97ac465b97031a15069ca59b64c60253a7f1b0140c3bed10ed5ad999568_sk
+    signedCert:
+      path: /mnt/fabric/crypto-config/peerOrganizations/wsfstrustee-net/peers/peer0.wsfstrustee-net/msp/signcerts/cert.pem
+
+  saludapacinv:
+    mspid: saludapacinvMSP
+    peers:
+      - peer0.saludapacinv-net
+    certificateAuthorities:
+      - ca.saludapacinv-net
+    adminPrivateKey:
+      path: /mnt/fabric/crypto-config/peerOrganizations/saludapacinv-net/peers/peer0.saludapacinv-net/msp/keystore/6f665724abb37815baf25b5fbd8f278aaab6646b92b7580d13e7461be7124626_sk
+    signedCert:
+      path: /mnt/fabric/crypto-config/peerOrganizations/saludapacinv-net/peers/peer0.saludapacinv-net/msp/signcerts/cert.pem
+
+  saludapacserv:
+    mspid: saludapacservMSP
+    peers:
+      - peer0.saludapacserv-net
+    certificateAuthorities:
+      - ca.saludapacserv-net
+    adminPrivateKey:
+      path: /mnt/fabric/crypto-config/peerOrganizations/saludapacserv-net/peers/peer0.saludapacserv-net/msp/keystore/cb5d47823eb9aabf7fd3f1ac1137b347026c7e81da9a24d497939ca6d75f8a2f_sk
+    signedCert:
+      path: /mnt/fabric/crypto-config/peerOrganizations/saludapacserv-net/peers/peer0.saludapacserv-net/msp/signcerts/cert.pem
+
+#
+# List of orderers to send transaction and channel create/update requests to. For the time
+# being only one orderer is needed. If more than one is defined, which one get used by the
+# SDK is implementation specific. Consult each SDK's documentation for its handling of orderers.
+#
+orderers:
+  orderer1.intain-net:
+    url: grpcs://orderer1.intain-net:7050
+
+    # these are standard properties defined by the gRPC library
+    # they will be passed in as-is to gRPC client constructor
+    grpcOptions:
+      ssl-target-name-override: orderer1.intain-net
+
+    tlsCACerts:
+      path: /mnt/fabric/crypto-config/ordererOrganizations/intain-net/orderers/orderer1.intain-net/tls/ca.crt
+
+  orderer2.intain-net:
+    url: grpcs://orderer2.intain-net:7050
+
+    # these are standard properties defined by the gRPC library
+    # they will be passed in as-is to gRPC client constructor
+    grpcOptions:
+      ssl-target-name-override: orderer2.intain-net
+
+    tlsCACerts:
+      path: /mnt/fabric/crypto-config/ordererOrganizations/intain-net/orderers/orderer2.intain-net/tls/ca.crt
+
+  orderer3.intain-net:
+    url: grpcs://orderer3.intain-net:7050
+
+    # these are standard properties defined by the gRPC library
+    # they will be passed in as-is to gRPC client constructor
+    grpcOptions:
+      ssl-target-name-override: orderer3.intain-net
+
+    tlsCACerts:
+      path: /mnt/fabric/crypto-config/ordererOrganizations/intain-net/orderers/orderer3.intain-net/tls/ca.crt
+  orderer4.intain-net:
+    url: grpcs://orderer4.intain-net:7050
+
+    # these are standard properties defined by the gRPC library
+    # they will be passed in as-is to gRPC client constructor
+    grpcOptions:
+      ssl-target-name-override: orderer4.intain-net
+
+    tlsCACerts:
+      path: /mnt/fabric/crypto-config/ordererOrganizations/intain-net/orderers/orderer4.intain-net/tls/ca.crt
+
+  orderer5.intain-net:
+    url: grpcs://orderer5.intain-net:7050
+
+    # these are standard properties defined by the gRPC library
+    # they will be passed in as-is to gRPC client constructor
+    grpcOptions:
+      ssl-target-name-override: orderer5.intain-net
+
+    tlsCACerts:
+      path: /mnt/fabric/crypto-config/ordererOrganizations/intain-net/orderers/orderer5.intain-net/tls/ca.crt
+
+#
+# List of peers to send various requests to, including endorsement, query
+# and event listener registration.
+#
+peers:
+  peer0.wsfstrustee-net:
+    url: grpcs://peer0.wsfstrustee-net:7051
+    grpcOptions:
+      ssl-target-name-override: peer0.wsfstrustee-net
+      negotiationType: TLS
+    tlsCACerts:
+      path: /mnt/fabric/crypto-config/peerOrganizations/wsfstrustee-net/peers/peer0.wsfstrustee-net/msp/tlscacerts/ca-wsfstrustee-net-staging.wsfs.intainabs.com-8443.pem
+
+  peer0.saludapacinv-net:
+    url: grpcs://peer0.saludapacinv-net:7051
+    grpcOptions:
+      ssl-target-name-override: peer0.saludapacinv-net
+      negotiationType: TLS
+    tlsCACerts:
+      path: /mnt/fabric/crypto-config/peerOrganizations/saludapacinv-net/peers/peer0.saludapacinv-net/msp/tlscacerts/ca-saludapacinv-net-staging.wsfs.intainabs.com-8443.pem
+
+  peer0.saludapacserv-net:
+    url: grpcs://peer0.saludapacserv-net:7051
+    grpcOptions:
+      ssl-target-name-override: peer0.saludapacserv-net
+      negotiationType: TLS
+    tlsCACerts:
+      path: /mnt/fabric/crypto-config/peerOrganizations/saludapacserv-net/peers/peer0.saludapacserv-net/msp/tlscacerts/ca-saludapacserv-net-staging.wsfs.intainabs.com-8443.pem
+
+#
+# Fabric-CA is a special kind of Certificate Authority provided by Hyperledger Fabric which allows
+# certificate management to be done via REST APIs. Application may choose to use a standard
+# Certificate Authority instead of Fabric-CA, in which case this section would not be specified.
+#
+certificateAuthorities:
+  ca.wsfstrustee-net:
+    url: https://ca.wsfstrustee-net:7054
+    httpOptions:
+      verify: false
+    tlsCACerts:
+      path: /mnt/fabric/crypto-config/peerOrganizations/wsfstrustee-net/ca/ca.wsfstrustee-net-cert.pem
+    registrar:
+      - enrollId: wsfstrustee-admin
+        enrollSecret: wsfstrustee-adminpw
+    # [Optional] The optional name of the CA.
+    caName: ca.wsfstrustee-net
+
+  ca.saludapacinv-net:
+    url: https://ca.saludapacinv-net:7054
+    httpOptions:
+      verify: false
+    tlsCACerts:
+      path: /mnt/fabric/crypto-config/peerOrganizations/saludapacinv-net/ca/ca.saludapacinv-net-cert.pem
+    registrar:
+      - enrollId: saludapacinv-admin
+        enrollSecret: saludapacinv-adminpw
+    # [Optional] The optional name of the CA.
+    caName: ca.saludapacinv-net
+
+  ca.saludapacserv-net:
+    url: https://ca.saludapacserv-net:7054
+    httpOptions:
+      verify: false
+    tlsCACerts:
+      path: /mnt/fabric/crypto-config/peerOrganizations/saludapacserv-net/ca/ca.saludapacserv-net-cert.pem
+    registrar:
+      - enrollId: saludapacserv-admin
+        enrollSecret: saludapacserv-adminpw
+    # [Optional] The optional name of the CA.
+    caName: ca.saludapacserv-net

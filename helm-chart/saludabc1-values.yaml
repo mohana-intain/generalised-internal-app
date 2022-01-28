@@ -1,0 +1,79 @@
+# Default values for internal-app.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+strategyType: Recreate
+
+imageReg: "intainregistry/lima-internal-app-staging:1.0.1"
+
+image:
+  pullPolicy: IfNotPresent
+  dockerTag: "1.0.0"
+
+imagePullSecrets:
+- name: regcred
+
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: false
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name:
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 4000
+  targetPort: 4000
+
+ingress:
+  enabled: true
+  annotations: 
+    kubernetes.io/ingress.class: haproxy
+    certmanager.k8s.io/acme-challenge-type: http01
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  hosts:
+    - host: saludabc1-demo.staging.wsfs.intainabs.com
+      paths: []
+  tls: 
+    - secretName: saludabc1demo-tls
+      hosts:
+        - saludabc1-demo.staging.wsfs.intainabs.com
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+storage:
+  app:
+    storageclassname: demo-filesc
+    storagesize: 1Gi

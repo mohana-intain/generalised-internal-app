@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ include "internal-app.fullname" . }}-pv
+  labels:
+    usage: {{ include "internal-app.fullname" . }}-pv
+spec:
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteMany
+  storageClassName: {{ .Values.storage.app.storageclassname }}
+  azureFile:
+    secretName: azure-secret
+    shareName: wsfs-staging-fileshare
+    secretNamespace: demo
+    readOnly: false

@@ -1,0 +1,246 @@
+---
+#
+# The network connection profile provides client applications the information about the target
+# blockchain network that are necessary for the applications to interact with it. These are all
+# knowledge that must be acquired from out-of-band sources. This file provides such a source.
+#
+name: "WSFS"
+
+#
+# Any properties with an "x-" prefix will be treated as application-specific, exactly like how naming
+# in HTTP headers or swagger properties work. The SDK will simply ignore these fields and leave
+# them for the applications to process. This is a mechanism for different components of an application
+# to exchange information that are not part of the standard schema described below. In particular,
+# the "x-type" property with the "hlfv1" value example below is used by Hyperledger Composer to
+# determine the type of Fabric networks (v0.6 vs. v1.0) it needs to work with.
+#
+x-type: "hlfv1"
+
+#
+# Describe what the target network is/does.
+#
+description: "WSFS"
+
+#
+# Schema version of the content. Used by the SDK to apply the corresponding parsing rules.
+#
+version: "1.0"
+
+#
+# The client section will be added on a per org basis see org1.yaml and org2.yaml
+#
+#client:
+
+#
+# [Optional]. But most apps would have this section so that channel objects can be constructed
+# based on the content below. If an app is creating channels, then it likely will not need this
+# section.
+#
+channels:
+  # name of the channel
+  dominionchannel:
+    # Required. list of orderers designated by the application to use for transactions on this
+    # channel. This list can be a result of access control ("org1" can only access "ordererA"), or
+    # operational decisions to share loads from applications among the orderers.  The values must
+    # be "names" of orgs defined under "organizations/peers"
+    orderers:
+      - orderer1.intain-net
+      - orderer2.intain-net
+      - orderer3.intain-net
+      - orderer4.intain-net
+      - orderer5.intain-net
+
+    # Required. list of peers from participating orgs
+    peers:
+      peer0.wsfstrustee-net:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: false
+
+      peer0.dominioninv-net:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: false
+
+      peer0.dominionserv-net:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: false
+
+    # [Optional]. what chaincodes are expected to exist on this channel? The application can use
+    # this information to validate that the target peers are in the expected state by comparing
+    # this list with the query results of getInstalledChaincodes() and getInstantiatedChaincodes()
+    chaincodes:
+      # the format follows the "cannonical name" of chaincodes by fabric code
+      #- mycc:v0
+
+#
+# list of participating organizations in this network
+#
+organizations:
+  wsfstrustee:
+    mspid: wsfstrusteeMSP
+    peers:
+      - peer0.wsfstrustee-net
+    certificateAuthorities:
+      - ca.wsfstrustee-net
+    adminPrivateKey:
+      path: /mnt/fabric/crypto-config/peerOrganizations/wsfstrustee-net/peers/peer0.wsfstrustee-net/msp/keystore/eb30b97ac465b97031a15069ca59b64c60253a7f1b0140c3bed10ed5ad999568_sk
+    signedCert:
+      path: /mnt/fabric/crypto-config/peerOrganizations/wsfstrustee-net/peers/peer0.wsfstrustee-net/msp/signcerts/cert.pem
+
+  dominioninv:
+    mspid: dominioninvMSP
+    peers:
+      - peer0.dominioninv-net
+    certificateAuthorities:
+      - ca.dominioninv-net
+    adminPrivateKey:
+      path: /mnt/fabric/crypto-config/peerOrganizations/dominioninv-net/peers/peer0.dominioninv-net/msp/keystore/32bd1addc7fb86c81ea5bfca286bae171da86d356939aaa6f9812e1c97217c01_sk
+    signedCert:
+      path: /mnt/fabric/crypto-config/peerOrganizations/dominioninv-net/peers/peer0.dominioninv-net/msp/signcerts/cert.pem
+
+  dominionserv:
+    mspid: dominionservMSP
+    peers:
+      - peer0.dominionserv-net
+    certificateAuthorities:
+      - ca.dominionserv-net
+    adminPrivateKey:
+      path: /mnt/fabric/crypto-config/peerOrganizations/dominionserv-net/peers/peer0.dominionserv-net/msp/keystore/9d330a12c47ffc3a6ce4526aa6f5c530ba38215618abe8b1ab1dfa60d421f314_sk
+    signedCert:
+      path: /mnt/fabric/crypto-config/peerOrganizations/dominionserv-net/peers/peer0.dominionserv-net/msp/signcerts/cert.pem
+
+#
+# List of orderers to send transaction and channel create/update requests to. For the time
+# being only one orderer is needed. If more than one is defined, which one get used by the
+# SDK is implementation specific. Consult each SDK's documentation for its handling of orderers.
+#
+orderers:
+  orderer1.intain-net:
+    url: grpcs://orderer1.intain-net:7050
+
+    # these are standard properties defined by the gRPC library
+    # they will be passed in as-is to gRPC client constructor
+    grpcOptions:
+      ssl-target-name-override: orderer1.intain-net
+
+    tlsCACerts:
+      path: /mnt/fabric/crypto-config/ordererOrganizations/intain-net/orderers/orderer1.intain-net/tls/ca.crt
+
+  orderer2.intain-net:
+    url: grpcs://orderer2.intain-net:7050
+
+    # these are standard properties defined by the gRPC library
+    # they will be passed in as-is to gRPC client constructor
+    grpcOptions:
+      ssl-target-name-override: orderer2.intain-net
+
+    tlsCACerts:
+      path: /mnt/fabric/crypto-config/ordererOrganizations/intain-net/orderers/orderer2.intain-net/tls/ca.crt
+
+  orderer3.intain-net:
+    url: grpcs://orderer3.intain-net:7050
+
+    # these are standard properties defined by the gRPC library
+    # they will be passed in as-is to gRPC client constructor
+    grpcOptions:
+      ssl-target-name-override: orderer3.intain-net
+
+    tlsCACerts:
+      path: /mnt/fabric/crypto-config/ordererOrganizations/intain-net/orderers/orderer3.intain-net/tls/ca.crt
+  orderer4.intain-net:
+    url: grpcs://orderer4.intain-net:7050
+
+    # these are standard properties defined by the gRPC library
+    # they will be passed in as-is to gRPC client constructor
+    grpcOptions:
+      ssl-target-name-override: orderer4.intain-net
+
+    tlsCACerts:
+      path: /mnt/fabric/crypto-config/ordererOrganizations/intain-net/orderers/orderer4.intain-net/tls/ca.crt
+
+  orderer5.intain-net:
+    url: grpcs://orderer5.intain-net:7050
+
+    # these are standard properties defined by the gRPC library
+    # they will be passed in as-is to gRPC client constructor
+    grpcOptions:
+      ssl-target-name-override: orderer5.intain-net
+
+    tlsCACerts:
+      path: /mnt/fabric/crypto-config/ordererOrganizations/intain-net/orderers/orderer5.intain-net/tls/ca.crt
+
+#
+# List of peers to send various requests to, including endorsement, query
+# and event listener registration.
+#
+peers:
+  peer0.wsfstrustee-net:
+    url: grpcs://peer0.wsfstrustee-net:7051
+    grpcOptions:
+      ssl-target-name-override: peer0.wsfstrustee-net
+      negotiationType: TLS
+    tlsCACerts:
+      path: /mnt/fabric/crypto-config/peerOrganizations/wsfstrustee-net/peers/peer0.wsfstrustee-net/msp/tlscacerts/ca-wsfstrustee-net-staging.wsfs.intainabs.com-8443.pem
+
+  peer0.dominioninv-net:
+    url: grpcs://peer0.dominioninv-net:7051
+    grpcOptions:
+      ssl-target-name-override: peer0.dominioninv-net
+      negotiationType: TLS
+    tlsCACerts:
+      path: /mnt/fabric/crypto-config/peerOrganizations/dominioninv-net/peers/peer0.dominioninv-net/msp/tlscacerts/ca-dominioninv-net-staging.wsfs.intainabs.com-8443.pem
+
+  peer0.dominionserv-net:
+    url: grpcs://peer0.dominionserv-net:7051
+    grpcOptions:
+      ssl-target-name-override: peer0.dominionserv-net
+      negotiationType: TLS
+    tlsCACerts:
+      path: /mnt/fabric/crypto-config/peerOrganizations/dominionserv-net/peers/peer0.dominionserv-net/msp/tlscacerts/ca-dominionserv-net-staging.wsfs.intainabs.com-8443.pem
+
+#
+# Fabric-CA is a special kind of Certificate Authority provided by Hyperledger Fabric which allows
+# certificate management to be done via REST APIs. Application may choose to use a standard
+# Certificate Authority instead of Fabric-CA, in which case this section would not be specified.
+#
+certificateAuthorities:
+  ca.wsfstrustee-net:
+    url: https://ca.wsfstrustee-net:7054
+    httpOptions:
+      verify: false
+    tlsCACerts:
+      path: /mnt/fabric/crypto-config/peerOrganizations/wsfstrustee-net/ca/ca.wsfstrustee-net-cert.pem
+    registrar:
+      - enrollId: wsfstrustee-admin
+        enrollSecret: wsfstrustee-adminpw
+    # [Optional] The optional name of the CA.
+    caName: ca.wsfstrustee-net
+
+  ca.dominioninv-net:
+    url: https://ca.dominioninv-net:7054
+    httpOptions:
+      verify: false
+    tlsCACerts:
+      path: /mnt/fabric/crypto-config/peerOrganizations/dominioninv-net/ca/ca.dominioninv-net-cert.pem
+    registrar:
+      - enrollId: dominioninv-admin
+        enrollSecret: dominioninv-adminpw
+    # [Optional] The optional name of the CA.
+    caName: ca.dominioninv-net
+
+  ca.dominionserv-net:
+    url: https://ca.dominionserv-net:7054
+    httpOptions:
+      verify: false
+    tlsCACerts:
+      path: /mnt/fabric/crypto-config/peerOrganizations/dominionserv-net/ca/ca.dominionserv-net-cert.pem
+    registrar:
+      - enrollId: dominionserv-admin
+        enrollSecret: dominionserv-adminpw
+    # [Optional] The optional name of the CA.
+    caName: ca.dominionserv-net

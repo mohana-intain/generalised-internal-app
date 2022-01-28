@@ -1,0 +1,29 @@
+{
+  "host": "localhost",
+  "port": "4000",
+  "jwt_expiretime": "36000",
+  "channelName": "dominionchannel",
+  "CC_SRC_PATH": "../artifacts",
+  "eventWaitTime": "60000",
+  "network_connection_profile_path": "",
+  "wsfstrustee_connection_profile_path": "",
+  "dominioninv_connection_profile_path": "",
+  "dominionserv_connection_profile_path": "",
+  "admins": [
+    {
+      "userOrg": "wsfstrustee",
+      "username": "wsfstrustee-admin",
+      "secret": "wsfstrustee-adminpw"
+    },
+    {
+      "userOrg": "dominioninv",
+      "username": "dominioninv-admin",
+      "secret": "dominioninv-adminpw"
+    },
+    {
+      "userOrg": "dominionserv",
+      "username": "dominionserv-admin",
+      "secret": "dominionserv-adminpw"
+    }
+  ]
+}
