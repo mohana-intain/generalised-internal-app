@@ -13,5 +13,5 @@ spec:
   azureFile:
     secretName: azure-secret
     shareName: wsfs-staging-fileshare
-    secretNamespace: demo
+    secretNamespace: testing
     readOnly: false
